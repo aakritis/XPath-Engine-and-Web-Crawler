@@ -1,0 +1,65 @@
+package edu.upenn.cis455.xpathengine;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.net.MalformedURLException;
+import java.net.Socket;
+import java.net.URL;
+import java.net.UnknownHostException;
+import java.util.HashMap;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.tidy.Tidy;
+import org.xml.sax.SAXException;
+
+
+public class XPathEngineClientSocket {
+	
+	protected URL url_obj;
+	protected String hostname;
+	protected int port_no;
+	protected String content_type = null;
+	
+	private String curr_url;
+	private String curr_path;
+	
+	// default constructor
+	public XPathEngineClientSocket() {
+		
+	}
+
+	// parameterized constructer to create the DOM object from url
+	public XPathEngineClientSocket(String url) {
+		try {
+			this.url_obj = new URL(url);
+			this.hostname = url_obj.getHost();
+			this.curr_url = url;
+			
+			this.curr_path = url_obj.getPath();
+			// handling root directory case
+			if (curr_path == "") 
+				curr_path = "/";
+			this.port_no = url_obj.getPort();
+			// if port no is not specified
+			if(this.port_no == -1) 
+				this.port_no = 80;
+		} 
+		catch (MalformedURLException e) {
+			System.out.println("[Output from log4j] Error while setting the Constructor for XPathEngineClientSocket + " + e.getMessage());
+		}
+	}
+	
+	public Document extract_dom_from_url(String url) throws UnknownHostException, IOException, InterruptedException{
+		Document dom_obj = null;
+		
+		return dom_obj;
+	}
+
+}

@@ -1,0 +1,82 @@
+package test.edu.upenn.cis455;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.UnknownHostException;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+
+import edu.upenn.cis455.xpathengine.XPathEngineImpl;
+import junit.framework.TestCase;
+
+
+@SuppressWarnings("unused")
+public class TestCasesXPathEngine extends TestCase 
+{
+	private String servletUrl = "http://localhost:8080/HW2/xpath";
+	private String xmlUrl = "http://cis555.co.nf/xml/courses.xml";
+
+	public void testText() throws UnknownHostException, IOException, InterruptedException
+	{
+		String xpath = "/courses/course/name[text() = \"Internet and Web Systems\"]";
+		XPathEngineImpl engine = new XPathEngineImpl();
+		String[] xpaths = new String[1];
+		xpaths[0] = xpath;
+		engine.setXPaths(xpaths);
+		Document dom = extract_dom_from_url(xmlUrl);
+		boolean[] existed = engine.evaluate(dom);
+		assertEquals(true, existed[0]);
+	}
+
+	/*public void testContains() throws UnknownHostException, IOException, InterruptedException
+	{
+		String xpath =  "/courses/course/name[contains(text(),\"Internet and Web Systems\")]";
+		XPathEngineImpl engine = new XPathEngineImpl();
+		String[] xpaths = new String[1];
+		xpaths[0] = xpath;
+		engine.setXPaths(xpaths);
+		Document dom = extract_dom_from_url(xmlUrl);
+		boolean[] existed = engine.evaluate(dom);
+		assertEquals(false, existed[0]);
+	}*/
+
+	public void testAtt() throws UnknownHostException, IOException, InterruptedException
+	{
+		String xpath =  "/courses/course[@id=\"cis550\"]";
+		XPathEngineImpl engine = new XPathEngineImpl();
+		String[] xpaths = new String[1];
+		xpaths[0] = xpath;
+		engine.setXPaths(xpaths);
+		Document dom = extract_dom_from_url(xmlUrl);
+		boolean[] existed = engine.evaluate(dom);
+		assertEquals(true, existed[0]);
+	}
+
+	public Document extract_dom_from_url(String url) throws UnknownHostException, IOException, InterruptedException{
+
+		URL urlObject;
+		try {
+			if (!url.contains("http://"))
+				url = "http://" + url;
+			urlObject = new URL(url);
+		} 
+		catch (MalformedURLException e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+		try {
+			Document dom = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(urlObject.openStream()); 
+			return dom;
+		} catch (SAXException e) {
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+}

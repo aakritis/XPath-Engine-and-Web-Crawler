@@ -1,0 +1,18 @@
+package edu.upenn.cis455.storage;
+
+import com.sleepycat.je.Environment;
+import com.sleepycat.persist.EntityStore;
+
+public class DBWrapper {
+	
+	@SuppressWarnings("unused")
+	private static String envDirectory = null;
+	
+	@SuppressWarnings("unused")
+	private static Environment myEnv;
+	@SuppressWarnings("unused")
+	private static EntityStore store;
+	
+	/* TODO: write object store wrapper for BerkeleyDB */
+	
+}

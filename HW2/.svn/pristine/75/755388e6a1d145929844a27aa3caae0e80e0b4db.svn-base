@@ -1,0 +1,52 @@
+package edu.upenn.cis455.servlet;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.Servlet;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+@SuppressWarnings({ "serial", "unused" })
+public class XPathServlet extends HttpServlet {
+
+	/* TODO: Implement user interface for XPath engine here */
+
+	public void init(ServletConfig config) throws ServletException {
+		System.out.println("[Ouptut from log4j] XPathServlet started!");
+	}
+	
+	/* You may want to override one or both of the following methods */
+
+	@Override
+	public void doPost(HttpServletRequest request, HttpServletResponse response) {
+		/* TODO: Implement user interface for XPath engine here */
+	}
+
+	@Override
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		/* TODO: Implement user interface for XPath engine here */
+		PrintWriter out = response.getWriter();
+		out.println("<html><body>");
+		
+		out.println("<form action='HandlerServlet' method = 'POST'>");
+		out.println("<h1 align='middle' padding = '0' margin = '0'><font color = '#0033CC'>XPath Engine</font></h1><br/>");
+		// creating text box for XPath 
+		out.println("<table align = 'center'> <tr>");
+		out.println("<td align = 'center'><font color = '#009933'><label>XPath</label></font></td>");
+		out.println("<td align = 'center'><input type='text' name='xpath' id='xpath' /></td></tr>");
+		// creating text box for HTML/XML Document URL 
+		out.println("<tr><td align='center'><font color = '#009933'><label>HTML/XML Document URL</label></td>");
+		out.println("<td align='center'><input type='text' name='url' id='url' /></td></tr>");
+		
+		out.println("</table><p align='center'><input type='submit' class='submit' value='Query'/></p>");
+		out.println("</form></body></html>");
+	}
+}
+
